@@ -1,12 +1,6 @@
 FROM node:18-alpine
-
 WORKDIR /app
-
 COPY . .
-
-# Basit bir static server kuruyoruz
-RUN npm install -g serve
-
+RUN npm install express node-fetch
 EXPOSE 3000
-
-CMD ["serve", "-s", ".", "-l", "3000"]
+CMD ["node", "server.js"]
