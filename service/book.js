@@ -1,6 +1,6 @@
-export async function getBookInfo(bookName) {
+export async function getBookInfo(title) {
   const res = await fetch(
-    `https://openlibrary.org/search.json?title=${bookName}`
+    `https://openlibrary.org/search.json?title=${encodeURIComponent(title)}`
   );
   const data = await res.json();
 
@@ -8,8 +8,7 @@ export async function getBookInfo(bookName) {
 
   return {
     title: book.title,
-    author: book.author_name?.[0],
-    year: book.first_publish_year,
-    pages: book.number_of_pages_median
+    author: book.author_name?.[0] || "Unknown",
+    subject: book.subject?.[0] || "Fantasy"
   };
 }
