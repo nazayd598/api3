@@ -1,9 +1,20 @@
-document.getElementById("btn").addEventListener("click", async () => {
-  const book = document.getElementById("book").value;
+import { getBookInfo } from "./services/book.js";
+import { getMovieByGenre } from "./services/movie.js";
 
-  const res = await fetch(`/api/book?name=${book}`);
-  const data = await res.json();
+async function run() {
+  const book = await getBookInfo("Harry Potter");
+  const movie = await getMovieByGenre(book.subject);
 
-  document.getElementById("result").innerText =
-    `${data.title} - ${data.author}\n"${data.quote}"`;
-});
+  document.getElementById("output").innerHTML = `
+    <h3>Book</h3>
+    <p>${book.title} - ${book.author}</p>
+    <p>Genre: ${book.subject}</p>
+
+    <h3>Movie Recommendation</h3>
+    <p>${movie.title}</p>
+    <p>Director: ${movie.director}</p>
+    <p>Year: ${movie.year}</p>
+  `;
+}
+
+run();
